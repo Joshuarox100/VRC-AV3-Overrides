@@ -25,13 +25,13 @@ Setting Up
 	>A list of what each Animation is for (and what types are compatible) can be found [here](#av3-override-controller).
 
 <p align="center">
-  <img width="80%" height="80%" src="">
+  <img width="80%" height="80%" src="Images/Step 3.png">
 </p>
 
 4) Once you have it how you like, open the [Conversion Window](#conversion-window) found under Window -> AV3 Tools -> AV3 Overrides. 
 
 <p align="center">
-  <img width="80%" height="80%" src="">
+  <img width="80%" height="80%" src="Images/Step 4.png">
 </p>
 
 5. Configure the provided settings as you'd like, drag in your duplicate Controller, and click Generate to convert it into Animators you can use in the Avatar Descriptor.
@@ -42,7 +42,7 @@ Everything should now be fully set up! If you have any issues or questions, look
 Conversion Window
 --------------
 <p align="center">
-  <img width="60%" height="60%" src="">
+  <img width="60%" height="60%" src="Images/Window.png">
 </p>
 
 | Setting | Function |
@@ -56,7 +56,7 @@ Conversion Window
 AV3 Override Controller
 --------------
 <p align="center">
-  <img width="60%" height="60%" src="">
+  <img width="60%" height="60%" src="Images/Controller.png">
 </p>
 
 | Animation | Purpose |
