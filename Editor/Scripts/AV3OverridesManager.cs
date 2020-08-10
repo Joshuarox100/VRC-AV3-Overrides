@@ -636,7 +636,7 @@ public class AV3OverridesManager : Object
     public bool FindTemplates()
     {
         UpdatePaths();
-        dummy = (AssetDatabase.FindAssets("AV3OverridesDummyController", new string[] { relativePath + Path.DirectorySeparatorChar + "Overrides" }).Length != 0) ? (AnimatorController)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("AV3OverridesDummyController", new string[] { relativePath + Path.DirectorySeparatorChar + "Overrides" })[0]), typeof(AnimatorController)) : null;
+        dummy = (AssetDatabase.FindAssets("AV3OverridesDummyController", new string[] { relativePath + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Dummy" }).Length != 0) ? (AnimatorController)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("AV3OverridesDummyController", new string[] { relativePath + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Dummy" })[0]), typeof(AnimatorController)) : null;
         templateFX = (AssetDatabase.FindAssets("FX (AV3Overrides)", new string[] { relativePath + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animators" }).Length != 0) ? (AnimatorController)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("FX (AV3Overrides)", new string[] { relativePath + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animators" })[0]), typeof(AnimatorController)) : null;
         if (dummy == null || templateFX == null)
         {
