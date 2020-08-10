@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEditor;
 using UnityEngine;
+using VRC.SDK3.Avatars.Components;
 
 public class AV3OverridesWindow : EditorWindow
 {
@@ -16,8 +16,22 @@ public class AV3OverridesWindow : EditorWindow
         window.Show();
     }
 
+    private void OnFocus()
+    {
+        manager.UpdatePaths();
+    }
+
     private void OnGUI()
     {
-        GUILayout.Box("Test");
+        EditorGUILayout.BeginVertical();
+        manager.avatar = (VRCAvatarDescriptor)EditorGUILayout.ObjectField("Avatar", manager.avatar, typeof(VRCAvatarDescriptor), true);
+        manager.overrides = (AnimatorOverrideController)EditorGUILayout.ObjectField("Override", manager.overrides, typeof(AnimatorOverrideController), false);
+        GUILayout.Label(manager.outputPath);
+        manager.autoOverwrite = Convert.ToBoolean(GUILayout.Toolbar(Convert.ToInt32(manager.autoOverwrite), new string[] { "No", "Yes" }));
+        if (GUILayout.Button("Generate"))
+        {
+            manager.GenerateAnimators();
+        }
+        EditorGUILayout.EndVertical();
     }
 }
