@@ -16,24 +16,31 @@ Setting Up
   <img width="80%" height="80%" src="">
 </p>
 
-2) Open the setup window located under Window -> Avatar Scaling -> Configure Scaling.
+2) Duplicate the AV3 Override Controller located in the AV3 Overrides folder.
 
 <p align="center">
   <img width="80%" height="80%" src="">
 </p>
 
-3) Next, configure how you want scaling to be setup for your avatar:
-	>If you're not sure what a particular setting does, hover your mouse over the text to see its function or refer to [Configuration](#configuration).
+3) Next, modify the duplicate as you wish with whatever Animations you want.
+	>A list of what each Animation is for (and what types are compatible) can be found [here](#av3-override-controller).
 
 <p align="center">
   <img width="80%" height="80%" src="">
 </p>
 
-4) Finally, click Apply Changes to automatically set up scaling for your avatar! 
+4) Once you have it how you like, open the [Conversion Window](#conversion-window) found under Window -> AV3 Overrides. 
+
+<p align="center">
+  <img width="80%" height="80%" src="">
+</p>
+
+5. Configure the provided settings as you'd like, drag in your duplicate Controller, and click Generate to convert it into Animators you can use in the Avatar Descriptor.
+	>Upon a successful generation, the created Animators will automatically be slotted into the descriptor in their corresponding spots (unless if one is already present and you haven't turned on Replace Animators).
 
 Everything should now be fully set up! If you have any issues or questions, look in the [troubleshooting](#troubleshooting) and [questions](#common-questions) section below before [contacting me](#contacting-me).
 
-Configuration
+Conversion Window
 --------------
 <p align="center">
   <img width="60%" height="60%" src="">
@@ -46,6 +53,20 @@ Configuration
 | Replace Animators | Replace Animators already present in the Avatar Descriptor. |
 | Destination | The folder where generated files will be saved to. |
 | Overwrite All | Automatically overwrite existing files if needed. |
+
+AV3 Override Controller
+--------------
+<p align="center">
+  <img width="60%" height="60%" src="">
+</p>
+
+| Animation | Purpose |
+| --------- | ---------- |
+| AFK | Plays whenever you press END, open the SteamVR Overlay, or take off your headset. (Transforms Only) |
+| BACKFLIP | One of the 8 default Emotes. (Transforms Only) |
+| CROUCH_STILL | Plays whenever you're crouched and not moving. (Transforms Only) |
+| CROUCH_WALK_FORWARD | Plays whenever you're crouched and walking forward. (Transforms Only) |
+| CROUCH_WALK_RIGHT | Plays whenever you're crouched and walk directly right. \[Mirrored for Left] (Transforms Only) |
 
 Common Questions
 --------------
