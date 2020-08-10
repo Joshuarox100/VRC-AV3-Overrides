@@ -61,7 +61,7 @@ AV3 Override Controller
 </p>
 
 | Animation | Purpose |
-| --------- | ---------- |
+| :-------: | ---------- |
 | AFK | Plays whenever you press END, open the SteamVR Overlay, or take off your headset. (Transforms Only) |
 | BACKFLIP | One of the 8 default Emotes. (Transforms Only) |
 | CROUCH_STILL | Plays whenever you're crouched and not moving. (Transforms Only) |
