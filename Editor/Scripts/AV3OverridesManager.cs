@@ -664,7 +664,21 @@ public class AV3OverridesManager : UnityEngine.Object
 
     private void RevertChanges()
     {
-        backupManager.RestoreAssets();
+        AssetDatabase.SaveAssets();
+        if (backupManager != null && !backupManager.RestoreAssets())
+            Debug.LogError("[AV3 Overrides] Failed to revert all changes.");
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+        for (int i = 0; i < generated.ToArray().Length; i++)
+            if (!AssetDatabase.DeleteAsset(generated[i].path))
+                Debug.LogError("[AV3 Overrides] Failed to revert all changes.");
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+        if (AssetDatabase.IsValidFolder(outputPath + Path.DirectorySeparatorChar + "Animators") && AssetDatabase.FindAssets("", new string[] { outputPath + Path.DirectorySeparatorChar + "Animators" }).Length == 0)
+            if (!AssetDatabase.DeleteAsset(outputPath + Path.DirectorySeparatorChar + "Animators"))
+                Debug.LogError("[AV3 Overrides] Failed to revert all changes.");
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
     }
 
     private void UpdatePaths()
