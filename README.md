@@ -29,7 +29,7 @@ Setting Up
   <img width="80%" height="80%" src="">
 </p>
 
-4) Once you have it how you like, open the [Conversion Window](#conversion-window) found under Window -> AV3 Overrides. 
+4) Once you have it how you like, open the [Conversion Window](#conversion-window) found under Window -> AV3 Tools -> AV3 Overrides. 
 
 <p align="center">
   <img width="80%" height="80%" src="">

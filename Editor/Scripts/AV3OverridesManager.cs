@@ -30,7 +30,7 @@ public class AV3OverridesManager : UnityEngine.Object
 
     public AV3OverridesManager() { }
 
-    public int GenerateAnimators()
+    public void GenerateAnimators()
     {
         try 
         {
@@ -38,22 +38,22 @@ public class AV3OverridesManager : UnityEngine.Object
             if (avatar == null)
             {
                 EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: No avatar is selected.", "Close");
-                return 1;
+                return;
             }
             else if (overrides == null)
             {
                 EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: No override controller provided.", "Close");
-                return 2;
+                return;
             }
             else if (dummy == null)
             {
                 EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to locate dummy controller.", "Close");
-                return 3;
+                return;
             }
             else if (overrides.runtimeAnimatorController != dummy)
             {
                 EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Provided Override Controller is invalid.", "Close");
-                return 4;
+                return;
             }
 
             //Check Animations for incompatibilities
@@ -67,7 +67,7 @@ public class AV3OverridesManager : UnityEngine.Object
                 if (!CheckCompatibility(pair))
                 {
                     EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: " + pair.Value.name + " cannot be used for " + pair.Key.name + " because it modifies properties unusable in its layer!\n(View the GitHub for more information)", "Close");
-                    return 5;
+                    return;
                 }
             }
             EditorUtility.DisplayProgressBar("AV3 Overrides", "Checking Animation Compatibility", 0.2f);
@@ -85,21 +85,101 @@ public class AV3OverridesManager : UnityEngine.Object
             AssetDatabase.SaveAssets();
 
             EditorUtility.DisplayProgressBar("AV3 Overrides", "Copying Templates", 0.25f);
-            CopySDKTemplate(avatar.name + "_Base.controller", "vrc_AvatarV3LocomotionLayer");
+            switch (CopySDKTemplate(avatar.name + "_Base.controller", "vrc_AvatarV3LocomotionLayer"))
+            {
+                case 1:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "Cancelled.", "Close");
+                    RevertChanges();
+                    return;
+                case 3:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to create one or more files!", "Close");
+                    RevertChanges();
+                    return;
+            }
             EditorUtility.DisplayProgressBar("AV3 Overrides", "Copying Templates", 0.3f);
-            CopySDKTemplate(avatar.name + "_Additive.controller", "vrc_AvatarV3IdleLayer");
+            switch (CopySDKTemplate(avatar.name + "_Additive.controller", "vrc_AvatarV3IdleLayer"))
+            {
+                case 1:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "Cancelled.", "Close");
+                    RevertChanges();
+                    return;
+                case 3:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to create one or more files!", "Close");
+                    RevertChanges();
+                    return;
+            }
             EditorUtility.DisplayProgressBar("AV3 Overrides", "Copying Templates", 0.35f);
-            CopySDKTemplate(avatar.name + "_Gesture.controller", "vrc_AvatarV3HandsLayer");
+            switch (CopySDKTemplate(avatar.name + "_Gesture.controller", "vrc_AvatarV3HandsLayer"))
+            {
+                case 1:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "Cancelled.", "Close");
+                    RevertChanges();
+                    return;
+                case 3:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to create one or more files!", "Close");
+                    RevertChanges();
+                    return;
+            }
             EditorUtility.DisplayProgressBar("AV3 Overrides", "Copying Templates", 0.4f);
-            CopySDKTemplate(avatar.name + "_Action.controller", "vrc_AvatarV3ActionLayer");
+            switch (CopySDKTemplate(avatar.name + "_Action.controller", "vrc_AvatarV3ActionLayer"))
+            {
+                case 1:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "Cancelled.", "Close");
+                    RevertChanges();
+                    return;
+                case 3:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to create one or more files!", "Close");
+                    RevertChanges();
+                    return;
+            }
             EditorUtility.DisplayProgressBar("AV3 Overrides", "Copying Templates", 0.45f);
-            CopySDKTemplate(avatar.name + "_FX.controller", "vrc_AvatarV3FaceLayer");
+            switch (CopySDKTemplate(avatar.name + "_FX.controller", "vrc_AvatarV3FaceLayer"))
+            {
+                case 1:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "Cancelled.", "Close");
+                    RevertChanges();
+                    return;
+                case 3:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to create one or more files!", "Close");
+                    RevertChanges();
+                    return;
+            }
             EditorUtility.DisplayProgressBar("AV3 Overrides", "Copying Templates", 0.5f);
-            CopySDKTemplate(avatar.name + "_Sitting.controller", "vrc_AvatarV3SittingLayer");
+            switch (CopySDKTemplate(avatar.name + "_Sitting.controller", "vrc_AvatarV3SittingLayer"))
+            {
+                case 1:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "Cancelled.", "Close");
+                    RevertChanges();
+                    return;
+                case 3:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to create one or more files!", "Close");
+                    RevertChanges();
+                    return;
+            }
             EditorUtility.DisplayProgressBar("AV3 Overrides", "Copying Templates", 0.55f);
-            CopySDKTemplate(avatar.name + "_TPose.controller", "vrc_AvatarV3UtilityTPose");
+            switch (CopySDKTemplate(avatar.name + "_TPose.controller", "vrc_AvatarV3UtilityTPose"))
+            {
+                case 1:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "Cancelled.", "Close");
+                    RevertChanges();
+                    return;
+                case 3:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to create one or more files!", "Close");
+                    RevertChanges();
+                    return;
+            }
             EditorUtility.DisplayProgressBar("AV3 Overrides", "Copying Templates", 0.6f);
-            CopySDKTemplate(avatar.name + "_IKPose.controller", "vrc_AvatarV3UtilityIKPose");
+            switch (CopySDKTemplate(avatar.name + "_IKPose.controller", "vrc_AvatarV3UtilityIKPose"))
+            {
+                case 1:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "Cancelled.", "Close");
+                    RevertChanges();
+                    return;
+                case 3:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to create one or more files!", "Close");
+                    RevertChanges();
+                    return;
+            }
             EditorUtility.DisplayProgressBar("AV3 Overrides", "Copying Templates", 0.65f);
 
             AnimatorController baseAnimator = null;
@@ -161,7 +241,7 @@ public class AV3OverridesManager : UnityEngine.Object
             {
                 EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to create one or more Animators.", "Close");
                 RevertChanges();
-                return 6;
+                return;
             }
 
             //Add extra layers to FX
@@ -172,7 +252,7 @@ public class AV3OverridesManager : UnityEngine.Object
             }
             else
             {
-                return 7;
+                return;
             }
 
             //Replace Animations
@@ -190,7 +270,7 @@ public class AV3OverridesManager : UnityEngine.Object
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in Base.", "Close");
                             RevertChanges();
-                            return 8;
+                            return;
                         }
                     }
                     foreach (AnimatorControllerLayer layer in additiveAnimator.layers)
@@ -199,7 +279,7 @@ public class AV3OverridesManager : UnityEngine.Object
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in Additive.", "Close");
                             RevertChanges();
-                            return 8;
+                            return;
                         }
                     }
                     foreach (AnimatorControllerLayer layer in gestureAnimator.layers)
@@ -208,7 +288,7 @@ public class AV3OverridesManager : UnityEngine.Object
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in Gesture.", "Close");
                             RevertChanges();
-                            return 8;
+                            return;
                         }
                     }
                     foreach (AnimatorControllerLayer layer in actionAnimator.layers)
@@ -217,7 +297,7 @@ public class AV3OverridesManager : UnityEngine.Object
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in Action.", "Close");
                             RevertChanges();
-                            return 8;
+                            return;
                         }
                     }
                     foreach (AnimatorControllerLayer layer in fxAnimator.layers)
@@ -226,7 +306,7 @@ public class AV3OverridesManager : UnityEngine.Object
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in FX.", "Close");
                             RevertChanges();
-                            return 8;
+                            return;
                         }
                     }
                     foreach (AnimatorControllerLayer layer in sittingAnimator.layers)
@@ -235,7 +315,7 @@ public class AV3OverridesManager : UnityEngine.Object
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in Sitting.", "Close");
                             RevertChanges();
-                            return 8;
+                            return;
                         }
                     }
                     foreach (AnimatorControllerLayer layer in tposeAnimator.layers)
@@ -244,7 +324,7 @@ public class AV3OverridesManager : UnityEngine.Object
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in TPose.", "Close");
                             RevertChanges();
-                            return 8;
+                            return;
                         }
                     }
                     foreach (AnimatorControllerLayer layer in ikposeAnimator.layers)
@@ -253,7 +333,7 @@ public class AV3OverridesManager : UnityEngine.Object
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in IKPose.", "Close");
                             RevertChanges();
-                            return 8;
+                            return;
                         }
                     }
                 }
@@ -348,14 +428,14 @@ public class AV3OverridesManager : UnityEngine.Object
 
             EditorUtility.DisplayDialog("AV3 Overrides", "Success!", "Close");
             Selection.activeObject = avatar;
-            return 0;
+            return;
         }
         catch (Exception err)
         {
             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: An exception has occured!\nCheck the console for more details.", "Close");
             Debug.LogError(err);
             RevertChanges();
-            return 99;
+            return;
         }      
     }
 
