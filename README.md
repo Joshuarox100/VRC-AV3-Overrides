@@ -63,7 +63,7 @@ AV3 Override Controller
 | Animation | Purpose |
 | :-------: | ---------- |
 | AFK | Plays whenever you press END, open the SteamVR Overlay, or take off your headset. (Transforms Only) |
-| BACKFLIP | One of the 8 default Emotes. (Transforms Only) |
+| BACKFLIP | One of the 8 default standing Emotes. (Transforms Only) |
 | CROUCH_STILL | Plays whenever you're crouched and not moving. (Transforms Only) |
 | CROUCH_WALK_FORWARD | Plays whenever you're crouched and walking forward. (Transforms Only) |
 | CROUCH_WALK_RIGHT | Plays whenever you're crouched and walk directly right. \[Mirrored for Left] (Transforms Only) |
@@ -71,12 +71,15 @@ AV3 Override Controller
 Common Questions
 --------------
 **Can I use this to replace Animations within my own Animators?**
->No, I may release another tool later on for that. This is meant simply for upgrading 2.0 Avatars in an easier fashion so you can get on to learning and trying new things.
+>No, I may release another tool later on for that. This tool is meant simply for upgrading 2.0 Avatars in an easier fashion so you can get on to learning and trying new things that Avatars 3.0 allows for.
 
 Troubleshooting
 --------------
 **The window refuses to open.**
 >To fix this, reset your Editor layout by clicking Layout in the top right of the Editor and clicking Reset Factory Settings, then attempt to open the window again.
+
+**"Your Animation cannot be used for this because it modifies properties unusable in its layer!"**
+>This will occur if you're trying to use a Animation that modifies Non-Transforms for an Animation within a layer that doesn't allow it (or vice versa). You can find out which Animations are 'Transforms Only' [here](#av3-override-controller). If your Animation modifies both Transforms and Non-Transforms, you'll need to split the Animation in two.
 
 **"An exception occured!"**
 >If this happens, ensure you have a clean install of AV3 Overrides, and if the problem persists, [let me know](#contacting-me)!

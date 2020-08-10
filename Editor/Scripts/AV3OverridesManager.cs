@@ -66,7 +66,7 @@ public class AV3OverridesManager : UnityEngine.Object
             {
                 if (!CheckCompatibility(pair))
                 {
-                    EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: " + pair.Value.name + " cannot be used for " + pair.Key.name + " because it modifies properties unusable for the layer it's within!", "Close");
+                    EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: " + pair.Value.name + " cannot be used for " + pair.Key.name + " because it modifies properties unusable in its layer!\n(View the GitHub for more information)", "Close");
                     return 5;
                 }
             }
