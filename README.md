@@ -66,9 +66,9 @@ AV3 Override Controller
 | BACKFLIP | **(Transforms Only)** One of the 8 default standing Emotes. |
 | CROUCH_STILL | **(Transforms Only)** Plays whenever you're crouched and not moving. |
 | CROUCH_WALK_FORWARD | **(Transforms Only)** Plays whenever you're crouched and walking forward. |
-| CROUCH_WALK_RIGHT | **\[Mirrored for Left] (Transforms Only)** Plays whenever you're crouched and walk directly right. |
-| CROUCH_WALK_RIGHT_135 | **\[Mirrored for Left] (Transforms Only)** Plays whenever you're crouched and walk to the right slightly diagonally. |
-| CROUCH_WALK_RIGHT_45 | **\[Mirrored for Left] (Transforms Only)** Plays whenever you're crouched and walk diagonally. |
+| CROUCH_WALK_RIGHT | **(Transforms Only) \[Mirrored for Left]** Plays whenever you're crouched and walk directly right. |
+| CROUCH_WALK_RIGHT_135 | **(Transforms Only) \[Mirrored for Left]** Plays whenever you're crouched and walk to the right slightly diagonally. |
+| CROUCH_WALK_RIGHT_45 | **(Transforms Only) \[Mirrored for Left]** Plays whenever you're crouched and walk diagonally. |
 | DANCE | **(Transforms Only)** One of the 8 default standing Emotes. |
 | DIE | **(Transforms Only)** One of the 8 default standing Emotes. |
 | EYES_DIE | **(Non-Transforms Only)** Plays to close your eyes when doing the DIE Emote. |
@@ -77,57 +77,57 @@ AV3 Override Controller
 | FACE_FIST | **(Non-Transforms Only)** Plays when gesturing a fist. |
 | FACE_GUN | **(Non-Transforms Only)** Plays when gesturing a hand gun. |
 | FACE_OPEN | **(Non-Transforms Only)** Plays when gesturing an open hand. |
-| FACE_PEACE | Plays when gesturing a peace sign. **(Non-Transforms Only)** |
-| FACE_ROCK | Plays when gesturing rock and roll. **(Non-Transforms Only)** |
-| FACE_THUMBS_UP | Plays when gesturing a thumbs up. **(Non-Transforms Only)** |
-| FALL_LONG | Plays after falling for a long while. **(Transforms Only)** |
-| FALL_SHORT | Plays when you start falling. **(Transforms Only)** |
-| HANDS_FIST | Plays when gesturing a fist. **(Transforms Only)** |
-| HANDS_GUN | Plays when gesturing a hand gun. **(Transforms Only)** |
-| HANDS_IDLE | Plays when you're not gesturing anything. **(Transforms Only)** |
-| HANDS_OPEN | Plays when gesturing an open hand. **(Transforms Only)** |
-| HANDS_PEACE | Plays when gesturing a peace sign. **(Transforms Only)** |
-| HANDS_ROCK | Plays when gesturing rock and roll. **(Transforms Only)** |
-| HANDS_THUMBS_UP | Plays when gesturing a thumbs up. **(Transforms Only)** |
-| IDLE | Additional movement added to your body while idling. **(Transforms Only)** |
-| IKPOSE | Animation used for determining major joint bends. **(Transforms Only)** |
-| LANDING | Plays when landing from a jump. **(Transforms Only)** |
-| LOW_CRAWL_FORWARD | Plays when prone and moving forward. **(Transforms Only)** |
-| LOW_CRAWL_RIGHT | Plays when prone and moving right. **\[Mirrored for Left] (Transforms Only)** |
-| LOW_CRAWL_STILL | Plays when prone and not moving. **(Transforms Only)** |
-| MOOD_ANGRY | Plays depending on your Avatar's mood. **(Non-Transforms Only)** |
-| MOOD_HAPPY | Plays depending on your Avatar's mood. **(Non-Transforms Only)** |
-| MOOD_NEUTRAL | Plays depending on your Avatar's mood. **(Non-Transforms Only)** |
-| MOOD_SAD | Plays depending on your Avatar's mood. **(Non-Transforms Only)** |
-| MOOD_SURPRISED | Plays depending on your Avatar's mood. **(Non-Transforms Only)** |
-| RUN_BACKWARD | Plays when running backwards. **(Transforms Only)** |
-| RUN_FORWARD | Plays when running forwards. **(Transforms Only)** |
-| RUN_STRAFE_RIGHT | Plays when running directly right. **\[Mirrored for Left] (Transforms Only)** |
-| RUN_STRAFE_RIGHT_135 | Plays when running right slightly diagonally. **\[Mirrored for Left] (Transforms Only)** |
-| RUN_STRAFE_RIGHT_45 | Plays when running diagonally. **\[Mirrored for Left] (Transforms Only)** |
-| SEATED_CLAP* | One of the 8 default seated Emotes. **(Transforms Only)** |
-| SEATED_DISAPPROVE* | One of the 8 default seated Emotes. **(Transforms Only)** |
-| SEATED_DISBELIEF* | One of the 8 default seated Emotes. **(Transforms Only)** |
-| SEATED_DRUM* | One of the 8 default seated Emotes. **(Transforms Only)** |
-| SEATED_LAUGH* | One of the 8 default seated Emotes. **(Transforms Only)** |
-| SEATED_POINT* | One of the 8 default seated Emotes. **(Transforms Only)** |
-| SEATED_RAISE_HAND* | One of the 8 default seated Emotes. **(Transforms Only)** |
-| SEATED_SHAKE_FIST* | One of the 8 default seated Emotes. **(Transforms Only)** |
-| SIT | Plays while sitting. **(Transforms Only)** |
-| SPRINT_FORWARD | Plays while sprinting forward. **(Transforms Only)** |
-| STAND_CHEER | One of the 8 default standing Emotes. **(Transforms Only)** |
-| STAND_CLAP | One of the 8 default standing Emotes. **(Transforms Only)** |
-| STAND_POINT | One of the 8 default standing Emotes. **(Transforms Only)** |
-| STAND_SADKICK | One of the 8 default standing Emotes. **(Transforms Only)** |
-| STAND_STILL | Played while standing still. **(Transforms Only)** |
-| STAND_WAVE | One of the 8 default standing Emotes. **(Transforms Only)** |
-| STRAFE_RIGHT | Plays when walking directly right. **\[Mirrored for Left] (Transforms Only)** |
-| STRAFE_RIGHT_135 | Plays when walking right slightly diagonally. **\[Mirrored for Left] (Transforms Only)** |
-| STRAFE_RIGHT_45 | Plays when walking diagonally. **\[Mirrored for Left] (Transforms Only)** |
-| SUPINE_GETUP | Played when exiting the DIE Emote. **(Transforms Only)** |
-| TPOSE | Used for determining various measurements of your avatar, most notably the position of the viewpoint. **(Transforms Only)** |
-| WALK_BACKWARD | Played while walking backwards. **(Transforms Only)** |
-| WALK_FORWARD | Played while walking forwards. **(Transforms Only)** |
+| FACE_PEACE | **(Non-Transforms Only)** Plays when gesturing a peace sign. |
+| FACE_ROCK | **(Non-Transforms Only)** Plays when gesturing rock and roll. |
+| FACE_THUMBS_UP | **(Non-Transforms Only)** Plays when gesturing a thumbs up. |
+| FALL_LONG | **(Transforms Only)** Plays after falling for a long while. |
+| FALL_SHORT | **(Transforms Only)** Plays when you start falling. |
+| HANDS_FIST | **(Transforms Only)** Plays when gesturing a fist. |
+| HANDS_GUN | **(Transforms Only)** Plays when gesturing a hand gun. |
+| HANDS_IDLE | **(Transforms Only)** Plays when you're not gesturing anything. |
+| HANDS_OPEN | **(Transforms Only)** Plays when gesturing an open hand. |
+| HANDS_PEACE | **(Transforms Only)** Plays when gesturing a peace sign. |
+| HANDS_ROCK | **(Transforms Only)** Plays when gesturing rock and roll. |
+| HANDS_THUMBS_UP | **(Transforms Only)** Plays when gesturing a thumbs up. |
+| IDLE | **(Transforms Only)** Additional movement added to your body while idling. |
+| IKPOSE | **(Transforms Only)** Animation used for determining major joint bends. |
+| LANDING | **(Transforms Only)** Plays when landing from a jump. |
+| LOW_CRAWL_FORWARD | **(Transforms Only)** Plays when prone and moving forward. |
+| LOW_CRAWL_RIGHT | **(Transforms Only) \[Mirrored for Left]** Plays when prone and moving right. |
+| LOW_CRAWL_STILL | **(Transforms Only)** Plays when prone and not moving. |
+| MOOD_ANGRY | **(Non-Transforms Only)** Plays depending on your Avatar's mood. |
+| MOOD_HAPPY | **(Non-Transforms Only)** Plays depending on your Avatar's mood. |
+| MOOD_NEUTRAL | **(Non-Transforms Only)** Plays depending on your Avatar's mood. |
+| MOOD_SAD | **(Non-Transforms Only)** Plays depending on your Avatar's mood. |
+| MOOD_SURPRISED | **(Non-Transforms Only)** Plays depending on your Avatar's mood. |
+| RUN_BACKWARD | **(Transforms Only)** Plays when running backwards. |
+| RUN_FORWARD | **(Transforms Only)** Plays when running forwards. |
+| RUN_STRAFE_RIGHT | **(Transforms Only) \[Mirrored for Left]** Plays when running directly right. |
+| RUN_STRAFE_RIGHT_135 | **(Transforms Only) \[Mirrored for Left]** Plays when running right slightly diagonally. |
+| RUN_STRAFE_RIGHT_45 | **(Transforms Only) \[Mirrored for Left]** Plays when running diagonally. |
+| SEATED_CLAP* | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SEATED_DISAPPROVE* | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SEATED_DISBELIEF* | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SEATED_DRUM* | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SEATED_LAUGH* | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SEATED_POINT* | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SEATED_RAISE_HAND* | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SEATED_SHAKE_FIST* | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SIT | **(Transforms Only)** Plays while sitting. |
+| SPRINT_FORWARD | **(Transforms Only)** Plays while sprinting forward. |
+| STAND_CHEER | **(Transforms Only)** One of the 8 default standing Emotes. |
+| STAND_CLAP | **(Transforms Only)** One of the 8 default standing Emotes. |
+| STAND_POINT | **(Transforms Only)** One of the 8 default standing Emotes. |
+| STAND_SADKICK | **(Transforms Only)** One of the 8 default standing Emotes. |
+| STAND_STILL | **(Transforms Only)** Played while standing still. |
+| STAND_WAVE | **(Transforms Only)** One of the 8 default standing Emotes. |
+| STRAFE_RIGHT | **(Transforms Only) \[Mirrored for Left]** Plays when walking directly right. |
+| STRAFE_RIGHT_135 | **(Transforms Only) \[Mirrored for Left]** Plays when walking right slightly diagonally. |
+| STRAFE_RIGHT_45 | **(Transforms Only) \[Mirrored for Left]** Plays when walking diagonally. |
+| SUPINE_GETUP | **(Transforms Only)** Played when exiting the DIE Emote. |
+| TPOSE | **(Transforms Only)** Used for determining various measurements of your avatar, most notably the position of the viewpoint. |
+| WALK_BACKWARD | **(Transforms Only)** Played while walking backwards. |
+| WALK_FORWARD | **(Transforms Only)** Played while walking forwards. |
 
 >\* \- Seated Emotes will not activate without use of a custom Expressions Menu.
 
