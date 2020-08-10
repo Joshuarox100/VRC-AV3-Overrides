@@ -15,7 +15,7 @@ public class AV3OverridesWindow : EditorWindow
     public static void ConvertOverride()
     {
         AV3OverridesWindow window = (AV3OverridesWindow)GetWindow(typeof(AV3OverridesWindow), false, "AV3 Overrides");
-        window.minSize = new Vector2(375f, 295f);
+        window.minSize = new Vector2(375f, 290f);
         window.wantsMouseMove = true;
         window.Show();
     }
