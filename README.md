@@ -7,7 +7,7 @@ Usage: This package is meant for use with VRChat's Avatars 3.0 (VRCSDK3-AVATAR)
 
 Description: Make upgrading to 3.0 a breeze with AV3 Overrides!
 
-Dependencies: [BMB Libraries](https://github.com/Joshuarox100/BMB-Libraries)(Included)
+Dependencies: [BMB Libraries](https://github.com/Joshuarox100/BMB-Libraries) (Included)
 
 Setting Up
 --------------
