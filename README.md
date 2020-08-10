@@ -62,22 +62,21 @@ AV3 Override Controller
 
 | Animation | Purpose |
 | :-------: | ---------- |
-| AFK | Plays whenever you press END, open the SteamVR Overlay, or take off your headset. **(Transforms Only)** |
-| BACKFLIP | One of the 8 default standing Emotes. **(Transforms Only)** |
-| CROUCH_STILL | Plays whenever you're crouched and not moving. **(Transforms Only)** |
-| CROUCH_WALK_FORWARD | Plays whenever you're crouched and walking forward. **(Transforms Only)** |
-| CROUCH_WALK_RIGHT | Plays whenever you're crouched and walk directly right. **\[Mirrored for Left] (Transforms Only)** |
-| CROUCH_WALK_RIGHT_135 | Plays whenever you're crouched and walk to the right slightly diagonally. **\[Mirrored for Left] (Transforms Only)** |
-| CROUCH_WALK_RIGHT_45 | Plays whenever you're crouched and walk diagonally. **\[Mirrored for Left] (Transforms Only)** |
-| DANCE | One of the 8 default standing Emotes. **(Transforms Only)** |
-| DIE | One of the 8 default standing Emotes. **(Transforms Only)** |
-| EYES_DIE | Plays to close your eyes when doing the DIE Emote. **(Non-Transforms Only)** |
-| EYES_OPEN | Plays to open up your eyes when DIE has completed. **(Non-Transforms Only)** |
-| EYES_SHUT | Plays to close your eyes when AFK. **(Non-Transforms Only)** |
-| FACE_FIST | Plays when gesturing a fist. **(Non-Transforms Only)** |
-| FACE_GUN | Plays when gesturing a hand gun. **(Non-Transforms Only)** |
-| FACE_IDLE | Plays when you're not gesturing anything. **(Non-Transforms Only)** |
-| FACE_OPEN | Plays when gesturing an open hand. **(Non-Transforms Only)** |
+| AFK | **(Transforms Only)** Plays whenever you press END, open the SteamVR Overlay, or take off your headset. |
+| BACKFLIP | **(Transforms Only)** One of the 8 default standing Emotes. |
+| CROUCH_STILL | **(Transforms Only)** Plays whenever you're crouched and not moving. |
+| CROUCH_WALK_FORWARD | **(Transforms Only)** Plays whenever you're crouched and walking forward. |
+| CROUCH_WALK_RIGHT | **\[Mirrored for Left] (Transforms Only)** Plays whenever you're crouched and walk directly right. |
+| CROUCH_WALK_RIGHT_135 | **\[Mirrored for Left] (Transforms Only)** Plays whenever you're crouched and walk to the right slightly diagonally. |
+| CROUCH_WALK_RIGHT_45 | **\[Mirrored for Left] (Transforms Only)** Plays whenever you're crouched and walk diagonally. |
+| DANCE | **(Transforms Only)** One of the 8 default standing Emotes. |
+| DIE | **(Transforms Only)** One of the 8 default standing Emotes. |
+| EYES_DIE | **(Non-Transforms Only)** Plays to close your eyes when doing the DIE Emote. |
+| EYES_OPEN | **(Non-Transforms Only)** Plays to open up your eyes when DIE has completed. |
+| EYES_SHUT | **(Non-Transforms Only)** Plays to close your eyes when AFK. |
+| FACE_FIST | **(Non-Transforms Only)** Plays when gesturing a fist. |
+| FACE_GUN | **(Non-Transforms Only)** Plays when gesturing a hand gun. |
+| FACE_OPEN | **(Non-Transforms Only)** Plays when gesturing an open hand. |
 | FACE_PEACE | Plays when gesturing a peace sign. **(Non-Transforms Only)** |
 | FACE_ROCK | Plays when gesturing rock and roll. **(Non-Transforms Only)** |
 | FACE_THUMBS_UP | Plays when gesturing a thumbs up. **(Non-Transforms Only)** |
