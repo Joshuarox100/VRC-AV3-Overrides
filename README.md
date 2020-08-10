@@ -137,10 +137,13 @@ AV3 Override Controller
 Common Questions
 --------------
 **Can I use this to replace Animations within my own Animators?**
->No, I may release another tool later on for that. This tool is meant simply for upgrading 2.0 Avatars in an easier fashion so you can get on to learning and trying new things that Avatars 3.0 allows for.
+>No, I may release another tool later on for that if the demand is present. This tool is meant for upgrading 2.0 Avatars in an easier fashion so you can get on to learning and trying new things that Avatars 3.0 allows for.
 
 Troubleshooting
 --------------
+**I don't have a menu for my Emotes when I go ingame.**
+>If you put in a custom Expressions Menu or Expression Parameters into your Avatar Descriptor, this is expected. You will need to create a custom menu that uses VRCEmote (1 - 8) to trigger your emotes. (This also means you need to use the default parameters within your Expression Parameters list!)
+
 **The window refuses to open.**
 >To fix this, reset your Editor layout by clicking Layout in the top right of the Editor and clicking Reset Factory Settings, then attempt to open the window again.
 
