@@ -14,6 +14,9 @@ public class AV3OverridesManager : Object
 
     private RuntimeAnimatorController dummy;
     public AnimatorOverrideController overrides;
+    public bool replaceAnimators;
+
+    private AnimatorController templateFX;
 
     public string relativePath;
     public string outputPath;
@@ -22,9 +25,7 @@ public class AV3OverridesManager : Object
     private Backup backupManager;
     private AssetList generated;
 
-    public AV3OverridesManager()
-    {
-    }
+    public AV3OverridesManager() { }
 
     public int GenerateAnimators()
     {
@@ -141,7 +142,6 @@ public class AV3OverridesManager : Object
 
         //Add extra layers to FX
 
-        AnimatorController templateFX = (AssetDatabase.FindAssets("FX (AV3Overrides)", new string[] { relativePath + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animators" }).Length != 0) ? (AnimatorController)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("FX (AV3Overrides)", new string[] { relativePath + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animators" })[0]), typeof(AnimatorController)) : null;
         if (templateFX != null)
         {
             AddLayersParameters(fxAnimator, templateFX);
@@ -252,37 +252,61 @@ public class AV3OverridesManager : Object
             avatar.customizeAnimationLayers = true;
         }
 
-        avatar.baseAnimationLayers[0].isEnabled = true;
-        avatar.baseAnimationLayers[0].isDefault = false;
-        avatar.baseAnimationLayers[0].animatorController = baseAnimator;
+        if (replaceAnimators || avatar.baseAnimationLayers[0].animatorController == null)
+        {
+            avatar.baseAnimationLayers[0].isEnabled = true;
+            avatar.baseAnimationLayers[0].isDefault = false;
+            avatar.baseAnimationLayers[0].animatorController = baseAnimator;
+        }
 
-        avatar.baseAnimationLayers[1].isEnabled = true;
-        avatar.baseAnimationLayers[1].isDefault = false;
-        avatar.baseAnimationLayers[1].animatorController = additiveAnimator;
+        if (replaceAnimators || avatar.baseAnimationLayers[1].animatorController == null)
+        {
+            avatar.baseAnimationLayers[1].isEnabled = true;
+            avatar.baseAnimationLayers[1].isDefault = false;
+            avatar.baseAnimationLayers[1].animatorController = additiveAnimator;
+        }
 
-        avatar.baseAnimationLayers[2].isEnabled = true;
-        avatar.baseAnimationLayers[2].isDefault = false;
-        avatar.baseAnimationLayers[2].animatorController = gestureAnimator;
+        if (replaceAnimators || avatar.baseAnimationLayers[2].animatorController == null)
+        {
+            avatar.baseAnimationLayers[2].isEnabled = true;
+            avatar.baseAnimationLayers[2].isDefault = false;
+            avatar.baseAnimationLayers[2].animatorController = gestureAnimator;
+        }
 
-        avatar.baseAnimationLayers[3].isEnabled = true;
-        avatar.baseAnimationLayers[3].isDefault = false;
-        avatar.baseAnimationLayers[3].animatorController = actionAnimator;
+        if (replaceAnimators || avatar.baseAnimationLayers[3].animatorController == null)
+        {
+            avatar.baseAnimationLayers[3].isEnabled = true;
+            avatar.baseAnimationLayers[3].isDefault = false;
+            avatar.baseAnimationLayers[3].animatorController = actionAnimator;
+        }
 
-        avatar.baseAnimationLayers[4].isEnabled = true;
-        avatar.baseAnimationLayers[4].isDefault = false;
-        avatar.baseAnimationLayers[4].animatorController = fxAnimator;
+        if (replaceAnimators || avatar.baseAnimationLayers[4].animatorController == null)
+        {
+            avatar.baseAnimationLayers[4].isEnabled = true;
+            avatar.baseAnimationLayers[4].isDefault = false;
+            avatar.baseAnimationLayers[4].animatorController = fxAnimator;
+        }
 
-        avatar.specialAnimationLayers[0].isEnabled = true;
-        avatar.specialAnimationLayers[0].isDefault = false;
-        avatar.specialAnimationLayers[0].animatorController = sittingAnimator;
+        if (replaceAnimators || avatar.specialAnimationLayers[0].animatorController == null)
+        {
+            avatar.specialAnimationLayers[0].isEnabled = true;
+            avatar.specialAnimationLayers[0].isDefault = false;
+            avatar.specialAnimationLayers[0].animatorController = sittingAnimator;
+        }
 
-        avatar.specialAnimationLayers[1].isEnabled = true;
-        avatar.specialAnimationLayers[1].isDefault = false;
-        avatar.specialAnimationLayers[1].animatorController = tposeAnimator;
+        if (replaceAnimators || avatar.specialAnimationLayers[1].animatorController == null)
+        {
+            avatar.specialAnimationLayers[1].isEnabled = true;
+            avatar.specialAnimationLayers[1].isDefault = false;
+            avatar.specialAnimationLayers[1].animatorController = tposeAnimator;
+        }
 
-        avatar.specialAnimationLayers[2].isEnabled = true;
-        avatar.specialAnimationLayers[2].isDefault = false;
-        avatar.specialAnimationLayers[2].animatorController = ikposeAnimator;
+        if (replaceAnimators || avatar.specialAnimationLayers[2].animatorController == null)
+        {
+            avatar.specialAnimationLayers[2].isEnabled = true;
+            avatar.specialAnimationLayers[2].isDefault = false;
+            avatar.specialAnimationLayers[2].animatorController = ikposeAnimator;
+        }
 
         AssetDatabase.SaveAssets();
 
@@ -597,7 +621,7 @@ public class AV3OverridesManager : Object
         backupManager.RestoreAssets();
     }
 
-    public void UpdatePaths()
+    private void UpdatePaths()
     {
         string old = relativePath;
         relativePath = AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("(AV3Overrides)")[0]).Substring(0, AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("(AV3Overrides)")[0]).LastIndexOf("Templates") - 1);
@@ -607,6 +631,17 @@ public class AV3OverridesManager : Object
         {
             outputPath = relativePath + Path.DirectorySeparatorChar + "Output";
         }
+    }
+
+    public bool FindTemplates()
+    {
+        UpdatePaths();
         dummy = (AssetDatabase.FindAssets("AV3OverridesDummyController", new string[] { relativePath + Path.DirectorySeparatorChar + "Overrides" }).Length != 0) ? (AnimatorController)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("AV3OverridesDummyController", new string[] { relativePath + Path.DirectorySeparatorChar + "Overrides" })[0]), typeof(AnimatorController)) : null;
+        templateFX = (AssetDatabase.FindAssets("FX (AV3Overrides)", new string[] { relativePath + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animators" }).Length != 0) ? (AnimatorController)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("FX (AV3Overrides)", new string[] { relativePath + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animators" })[0]), typeof(AnimatorController)) : null;
+        if (dummy == null || templateFX == null)
+        {
+            return false;
+        }
+        return true;
     }
 }
