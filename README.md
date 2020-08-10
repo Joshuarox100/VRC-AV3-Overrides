@@ -15,14 +15,10 @@ Setting Up
 
 1) Download and import the latest **Unity Package** from [**Releases**](https://github.com/Joshuarox100/VRC-AV3-Overrides/releases) on GitHub **(You will have issues if you don't)**.
 
-<p align="center">
-  <img width="80%" height="80%" src="">
-</p>
-
 2) Duplicate the AV3 Override Controller located in the AV3 Overrides folder.
 
 <p align="center">
-  <img width="80%" height="80%" src="">
+  <img width="80%" height="80%" src="Images/Step 2.png">
 </p>
 
 3) Next, modify the duplicate as you wish with whatever Animations you want.
