@@ -7,6 +7,8 @@ Usage: This package is meant for use with VRChat's Avatars 3.0 (VRCSDK3-AVATAR)
 
 Description: Make upgrading to 3.0 a breeze with AV3 Overrides!
 
+Dependencies: [BMB Libraries](https://github.com/Joshuarox100/BMB-Libraries)(Included)
+
 Setting Up
 --------------
 **NOTE: This tool is really only meant to be used once per Avatar, as a way of setting up the basic stuff quickly so you can start working on the new things faster. Although you can, this tool won't help much with Avatars you already have set up since it doesn't modify existing Animators.**
