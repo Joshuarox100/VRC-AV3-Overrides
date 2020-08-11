@@ -66,7 +66,7 @@ AV3 Override Controller
 | Animation | Purpose |
 | :-------: | ---------- |
 | AFK | **(Transforms Only)** Plays whenever you press END, open the SteamVR Overlay, or take off your headset. |
-| BACKFLIP * | **(Transforms Only)** One of the 8 default standing Emotes. |
+| BACKFLIP<sup>1</sup> | **(Transforms Only)** One of the 8 default standing Emotes. |
 | CROUCH_STILL | **(Transforms Only)** Plays whenever you're crouched and not moving. |
 | CROUCH_WALK_FORWARD | **(Transforms Only)** Plays whenever you're crouched and walking forward. |
 | CROUCH_WALK_RIGHT | **(Transforms Only) \[Mirrored for Left]** Plays whenever you're crouched and walk directly right. |
@@ -108,22 +108,22 @@ AV3 Override Controller
 | RUN_STRAFE_RIGHT | **(Transforms Only) \[Mirrored for Left]** Plays when running directly right. |
 | RUN_STRAFE_RIGHT_135 | **(Transforms Only) \[Mirrored for Left]** Plays when running right slightly diagonally. |
 | RUN_STRAFE_RIGHT_45 | **(Transforms Only) \[Mirrored for Left]** Plays when running diagonally. |
-| SEATED_CLAP \** | **(Transforms Only)** One of the 8 default seated Emotes. |
-| SEATED_DISAPPROVE \* \** | **(Transforms Only)** One of the 8 default seated Emotes. |
-| SEATED_DISBELIEF \* \** | **(Transforms Only)** One of the 8 default seated Emotes. |
-| SEATED_DRUM \** | **(Transforms Only)** One of the 8 default seated Emotes. |
-| SEATED_LAUGH \* \** | **(Transforms Only)** One of the 8 default seated Emotes. |
-| SEATED_POINT \* \** | **(Transforms Only)** One of the 8 default seated Emotes. |
-| SEATED_RAISE_HAND \** | **(Transforms Only)** One of the 8 default seated Emotes. |
-| SEATED_SHAKE_FIST \* \** | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SEATED_CLAP<sup>2</sup> | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SEATED_DISAPPROVE<sup>1 2</sup> | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SEATED_DISBELIEF<sup>1 2</sup> | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SEATED_DRUM<sup>2</sup> | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SEATED_LAUGH<sup>1 2</sup> | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SEATED_POINT<sup>1 2</sup> | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SEATED_RAISE_HAND<sup>2</sup> | **(Transforms Only)** One of the 8 default seated Emotes. |
+| SEATED_SHAKE_FIST<sup>1 2</sup> | **(Transforms Only)** One of the 8 default seated Emotes. |
 | SIT | **(Transforms Only)** Plays while sitting. |
 | SPRINT_FORWARD | **(Transforms Only)** Plays while sprinting forward. |
 | STAND_CHEER | **(Transforms Only)** One of the 8 default standing Emotes. |
 | STAND_CLAP | **(Transforms Only)** One of the 8 default standing Emotes. |
-| STAND_POINT* | **(Transforms Only)** One of the 8 default standing Emotes. |
-| STAND_SADKICK* | **(Transforms Only)** One of the 8 default standing Emotes. |
+| STAND_POINT<sup>1</sup> | **(Transforms Only)** One of the 8 default standing Emotes. |
+| STAND_SADKICK<sup>1</sup> | **(Transforms Only)** One of the 8 default standing Emotes. |
 | STAND_STILL | **(Transforms Only)** Played while standing still. |
-| STAND_WAVE * | **(Transforms Only)** One of the 8 default standing Emotes. |
+| STAND_WAVE<sup>1</sup> | **(Transforms Only)** One of the 8 default standing Emotes. |
 | STRAFE_RIGHT | **(Transforms Only) \[Mirrored for Left]** Plays when walking directly right. |
 | STRAFE_RIGHT_135 | **(Transforms Only) \[Mirrored for Left]** Plays when walking right slightly diagonally. |
 | STRAFE_RIGHT_45 | **(Transforms Only) \[Mirrored for Left]** Plays when walking diagonally. |
@@ -132,8 +132,8 @@ AV3 Override Controller
 | WALK_BACKWARD | **(Transforms Only)** Played while walking backwards. |
 | WALK_FORWARD | **(Transforms Only)** Played while walking forwards. |
 
->\* \- These Emotes do not loop by default and will exit after the Animation has finished playing.
-	\** \- Seated Emotes will not activate without use of a custom Expressions Menu.
+><sup>1</sup> \- These Emotes do not loop by default and will exit after the Animation has finished playing.
+	<sup>2</sup> \- Seated Emotes will not activate without use of a custom Expressions Menu.
 
 Common Questions
 --------------
