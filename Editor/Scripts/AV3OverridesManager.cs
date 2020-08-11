@@ -65,9 +65,9 @@ public class AV3OverridesManager : UnityEngine.Object
             EditorUtility.DisplayProgressBar("AV3 Overrides", "Checking Animation Compatibility", 0f);
             foreach (KeyValuePair<AnimationClip, AnimationClip> pair in clips)
             {
-                if (!CheckCompatibility(pair))
+                if (!CheckCompatibility(pair, out Type problem, out string propertyName))
                 {
-                    EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: " + pair.Value.name + " cannot be used for " + pair.Key.name + " because it modifies properties unusable in its layer!\n(View the GitHub for more information)", "Close");
+                    EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: " + pair.Value.name + " cannot be used for " + pair.Key.name + " because it modifies an invalid property type!\n\nInvalid Property Type: " + problem.Name + "\nName: " + propertyName, "Close");
                     return;
                 }
             }
@@ -640,7 +640,7 @@ public class AV3OverridesManager : UnityEngine.Object
         new KeyValuePair<string, string>("WALK_FORWARD", "Base"),
     };
 
-    private bool CheckCompatibility(KeyValuePair<AnimationClip, AnimationClip> pair)
+    private bool CheckCompatibility(KeyValuePair<AnimationClip, AnimationClip> pair, out Type problem, out string name)
     {
         string type = "Null";
         foreach (KeyValuePair<string, string> map in animTypes)
@@ -654,34 +654,44 @@ public class AV3OverridesManager : UnityEngine.Object
         switch(type)
         {
             case "FX":
-                if (!CheckCompatibilityHelper(pair.Value, false))
+                if (!CheckCompatibilityHelper(pair.Value, false, out problem, out name))
                 {
                     return false;
                 }
                 break;
             case "Null":
+                problem = null;
+                name = "I am error plz report to dev.";
                 return false;
             default:
-                if (!CheckCompatibilityHelper(pair.Value, true))
+                if (!CheckCompatibilityHelper(pair.Value, true, out problem, out name))
                 {
                     return false;
                 }
                 break;
         }
 
+        problem = null;
         return true;
     }
 
-    private bool CheckCompatibilityHelper(AnimationClip clip, bool transformsOnly)
+    private bool CheckCompatibilityHelper(AnimationClip clip, bool transformsOnly, out Type problem, out string name)
     {
         if (clip != null)
         {
             foreach (var binding in AnimationUtility.GetCurveBindings(clip))
             {
                 if ((transformsOnly && binding.type != typeof(Transform) && binding.type != typeof(Animator)) || (!transformsOnly && (binding.type == typeof(Transform) || binding.type == typeof(Animator))))
+                {
+                    problem = binding.type;
+                    name = binding.propertyName;
                     return false;
+                }                   
             }
-        }      
+        }
+
+        problem = null;
+        name = "";
         return true;
     }
 
