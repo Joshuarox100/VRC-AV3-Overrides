@@ -22,7 +22,7 @@ Setting Up
 </p>
 
 3) Next, modify the duplicate as you wish with whatever Animations you want.
-	>A list of what each Animation is for (and what types are compatible) can be found [here](#av3-override-controller).
+	>A list of what each Animation is for (and whether or not it's Transforms Only) can be found [here](#av3-override-controller).
 
 <p align="center">
   <img width="80%" height="80%" src="Images/Step 3.png">

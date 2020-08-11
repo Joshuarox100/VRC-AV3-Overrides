@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.Animations;
+using UnityEditor.Experimental.TerrainAPI;
 using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -180,6 +181,42 @@ public class AV3OverridesManager : UnityEngine.Object
                     RevertChanges();
                     return;
             }
+            EditorUtility.DisplayProgressBar("AV3 Overrides", "Copying Templates", 0.6125f);
+            switch (CopySDKTree(avatar.name + "_vrc_CrouchingLocomotion.asset", "vrc_CrouchingLocomotion"))
+            {
+                case 1:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "Cancelled.", "Close");
+                    RevertChanges();
+                    return;
+                case 3:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to create one or more files!", "Close");
+                    RevertChanges();
+                    return;
+            }
+            EditorUtility.DisplayProgressBar("AV3 Overrides", "Copying Templates", 0.625f);
+            switch (CopySDKTree(avatar.name + "_vrc_ProneLocomotion.asset", "vrc_ProneLocomotion"))
+            {
+                case 1:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "Cancelled.", "Close");
+                    RevertChanges();
+                    return;
+                case 3:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to create one or more files!", "Close");
+                    RevertChanges();
+                    return;
+            }
+            EditorUtility.DisplayProgressBar("AV3 Overrides", "Copying Templates", 0.6375f);
+            switch (CopySDKTree(avatar.name + "_vrc_StandingLocomotion.asset", "vrc_StandingLocomotion"))
+            {
+                case 1:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "Cancelled.", "Close");
+                    RevertChanges();
+                    return;
+                case 3:
+                    EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to create one or more files!", "Close");
+                    RevertChanges();
+                    return;
+            }
             EditorUtility.DisplayProgressBar("AV3 Overrides", "Copying Templates", 0.65f);
 
             AnimatorController baseAnimator = null;
@@ -191,16 +228,15 @@ public class AV3OverridesManager : UnityEngine.Object
             AnimatorController tposeAnimator = null;
             AnimatorController ikposeAnimator = null;
 
+            List<BlendTree> trees = new List<BlendTree>();
+
             AssetDatabase.SaveAssets();
 
             //find them
-            string[] results = AssetDatabase.FindAssets(avatar.name, new string[] { outputPath + Path.DirectorySeparatorChar + "Animators" });
+            string[] results = AssetDatabase.FindAssets(avatar.name, new string[] { outputPath + Path.DirectorySeparatorChar + "Animators", outputPath + Path.DirectorySeparatorChar + "BlendTrees" });
 
             foreach (string guid in results)
             {
-                if (baseAnimator != null && additiveAnimator != null && gestureAnimator != null && actionAnimator != null && fxAnimator != null && sittingAnimator != null && tposeAnimator != null && ikposeAnimator != null)
-                    break;
-
                 string path = AssetDatabase.GUIDToAssetPath(guid);
 
                 if (path.Contains(avatar.name + "_Base.controller"))
@@ -235,11 +271,21 @@ public class AV3OverridesManager : UnityEngine.Object
                 {
                     ikposeAnimator = (AnimatorController)AssetDatabase.LoadAssetAtPath(path, typeof(AnimatorController));
                 }
+                else if (path.Contains(avatar.name + "_vrc_CrouchingLocomotion.asset") || path.Contains(avatar.name + "_vrc_ProneLocomotion.asset") || path.Contains(avatar.name + "_vrc_StandingLocomotion.asset"))
+                {
+                    trees.Add((BlendTree)AssetDatabase.LoadAssetAtPath(path, typeof(BlendTree)));
+                }
             }
 
             if (baseAnimator == null || additiveAnimator == null || gestureAnimator == null || actionAnimator == null || fxAnimator == null || sittingAnimator == null || tposeAnimator == null || ikposeAnimator == null)
             {
                 EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to create one or more Animators.", "Close");
+                RevertChanges();
+                return;
+            }
+            else if (trees.Count != 3)
+            {
+                EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to create one or more BlendTrees.", "Close");
                 RevertChanges();
                 return;
             }
@@ -266,7 +312,7 @@ public class AV3OverridesManager : UnityEngine.Object
                 {
                     foreach (AnimatorControllerLayer layer in baseAnimator.layers)
                     {
-                        if (!ReplaceAnimation(baseAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
+                        if (!ReplaceMotion(baseAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in Base.", "Close");
                             RevertChanges();
@@ -275,7 +321,7 @@ public class AV3OverridesManager : UnityEngine.Object
                     }
                     foreach (AnimatorControllerLayer layer in additiveAnimator.layers)
                     {
-                        if (!ReplaceAnimation(additiveAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
+                        if (!ReplaceMotion(additiveAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in Additive.", "Close");
                             RevertChanges();
@@ -284,7 +330,7 @@ public class AV3OverridesManager : UnityEngine.Object
                     }
                     foreach (AnimatorControllerLayer layer in gestureAnimator.layers)
                     {
-                        if (!ReplaceAnimation(gestureAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
+                        if (!ReplaceMotion(gestureAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in Gesture.", "Close");
                             RevertChanges();
@@ -293,7 +339,7 @@ public class AV3OverridesManager : UnityEngine.Object
                     }
                     foreach (AnimatorControllerLayer layer in actionAnimator.layers)
                     {
-                        if (!ReplaceAnimation(actionAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
+                        if (!ReplaceMotion(actionAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in Action.", "Close");
                             RevertChanges();
@@ -302,7 +348,7 @@ public class AV3OverridesManager : UnityEngine.Object
                     }
                     foreach (AnimatorControllerLayer layer in fxAnimator.layers)
                     {
-                        if (!ReplaceAnimation(fxAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
+                        if (!ReplaceMotion(fxAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in FX.", "Close");
                             RevertChanges();
@@ -311,7 +357,7 @@ public class AV3OverridesManager : UnityEngine.Object
                     }
                     foreach (AnimatorControllerLayer layer in sittingAnimator.layers)
                     {
-                        if (!ReplaceAnimation(sittingAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
+                        if (!ReplaceMotion(sittingAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in Sitting.", "Close");
                             RevertChanges();
@@ -320,7 +366,7 @@ public class AV3OverridesManager : UnityEngine.Object
                     }
                     foreach (AnimatorControllerLayer layer in tposeAnimator.layers)
                     {
-                        if (!ReplaceAnimation(tposeAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
+                        if (!ReplaceMotion(tposeAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in TPose.", "Close");
                             RevertChanges();
@@ -329,16 +375,99 @@ public class AV3OverridesManager : UnityEngine.Object
                     }
                     foreach (AnimatorControllerLayer layer in ikposeAnimator.layers)
                     {
-                        if (!ReplaceAnimation(ikposeAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
+                        if (!ReplaceMotion(ikposeAnimator, layer.name, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value))
                         {
                             EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + animName + " in IKPose.", "Close");
                             RevertChanges();
                             return;
                         }
                     }
+                    foreach (BlendTree tree in trees)
+                    {
+                        ReplaceAnimation(tree, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value);
+                    }
                 }
             }
-            EditorUtility.DisplayProgressBar("AV3 Overrides", "Saving Controllers", 0.8f);
+
+            foreach (BlendTree tree in trees)
+            {
+                string treeName = tree.name.Substring(tree.name.LastIndexOf("vrc"));
+                Debug.Log(treeName);
+                foreach (AnimatorControllerLayer layer in baseAnimator.layers)
+                {
+                    if (!ReplaceMotion(baseAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees"})[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in Base.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+                foreach (AnimatorControllerLayer layer in additiveAnimator.layers)
+                {
+                    if (!ReplaceMotion(additiveAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in Additive.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+                foreach (AnimatorControllerLayer layer in gestureAnimator.layers)
+                {
+                    if (!ReplaceMotion(gestureAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in Gesture.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+                foreach (AnimatorControllerLayer layer in actionAnimator.layers)
+                {
+                    if (!ReplaceMotion(actionAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in Action.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+                foreach (AnimatorControllerLayer layer in fxAnimator.layers)
+                {
+                    if (!ReplaceMotion(fxAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in FX.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+                foreach (AnimatorControllerLayer layer in sittingAnimator.layers)
+                {
+                    if (!ReplaceMotion(sittingAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in Sitting.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+                foreach (AnimatorControllerLayer layer in tposeAnimator.layers)
+                {
+                    if (!ReplaceMotion(tposeAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in TPose.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+                foreach (AnimatorControllerLayer layer in ikposeAnimator.layers)
+                {
+                    if (!ReplaceMotion(ikposeAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in IKPose.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+            }
+
+            EditorUtility.DisplayProgressBar("AV3 Overrides", "Saving Assets", 0.8f);
 
             baseAnimator.SaveController();
             additiveAnimator.SaveController();
@@ -572,7 +701,7 @@ public class AV3OverridesManager : UnityEngine.Object
         }
     }
 
-    private bool ReplaceAnimation(AnimatorController source, string layerName, AnimationClip oldAnim, AnimationClip newAnim)
+    private bool ReplaceMotion(AnimatorController source, string layerName, Motion oldMotion, Motion newMotion)
     {
         AnimatorControllerLayer[] layers = source.layers;
         AnimatorControllerLayer selectedLayer = new AnimatorControllerLayer();
@@ -592,9 +721,9 @@ public class AV3OverridesManager : UnityEngine.Object
 
         for (int i = 0; i < selectedLayer.stateMachine.states.Length; i++)
         {
-            if (AssetDatabase.GetAssetPath(selectedLayer.stateMachine.states[i].state.motion) == AssetDatabase.GetAssetPath(oldAnim))
+            if (AssetDatabase.GetAssetPath(selectedLayer.stateMachine.states[i].state.motion) == AssetDatabase.GetAssetPath(oldMotion))
             {
-                selectedLayer.stateMachine.states[i].state.motion = newAnim;
+                selectedLayer.stateMachine.states[i].state.motion = newMotion;
             }
         }
 
@@ -610,6 +739,21 @@ public class AV3OverridesManager : UnityEngine.Object
         source.layers = layers;
 
         return true;
+    }
+
+    private void ReplaceAnimation(BlendTree source, AnimationClip oldAnim, AnimationClip newAnim)
+    {
+        ChildMotion[] motions = source.children;
+
+        for (int i = 0; i < motions.Length; i++)
+        {
+            if (AssetDatabase.GetAssetPath(motions[i].motion) == AssetDatabase.GetAssetPath(oldAnim))
+            {
+                motions[i].motion = newAnim;
+            }
+        }
+
+        source.children = motions;
     }
 
     private bool AddLayersParameters(AnimatorController source, AnimatorController target)
@@ -704,6 +848,42 @@ public class AV3OverridesManager : UnityEngine.Object
         AssetDatabase.Refresh();
 
         return true;
+    }
+
+    private int CopySDKTree(string outFile, string SDKfile)
+    {
+        if (!AssetDatabase.IsValidFolder(outputPath + Path.DirectorySeparatorChar + "BlendTrees"))
+            AssetDatabase.CreateFolder(outputPath, "BlendTrees");
+        bool existed = true;
+        if (File.Exists(outputPath + Path.DirectorySeparatorChar + "BlendTrees" + Path.DirectorySeparatorChar + outFile))
+        {
+            if (!autoOverwrite)
+            {
+                switch (EditorUtility.DisplayDialogComplex("AV3 Overrides", outFile + " already exists!\nOverwrite the file?", "Overwrite", "Cancel", "Skip"))
+                {
+                    case 1:
+                        return 1;
+                    case 2:
+                        return 2;
+                }
+            }
+            backupManager.AddToBackup(new Asset(outputPath + Path.DirectorySeparatorChar + "BlendTrees" + Path.DirectorySeparatorChar + outFile));
+        }
+        else
+        {
+            existed = false;
+        }
+        if (!AssetDatabase.CopyAsset(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(SDKfile, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), outputPath + Path.DirectorySeparatorChar + "BlendTrees" + Path.DirectorySeparatorChar + outFile))
+        {
+            return 3;
+        }
+        else
+        {
+            AssetDatabase.Refresh();
+            if (!existed)
+                generated.Add(new Asset(outputPath + Path.DirectorySeparatorChar + "BlendTrees" + Path.DirectorySeparatorChar + outFile));
+        }
+        return 0;
     }
 
     private int CopySDKTemplate(string outFile, string SDKfile)
