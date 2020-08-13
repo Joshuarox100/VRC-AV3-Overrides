@@ -148,7 +148,7 @@ Troubleshooting
 **The window refuses to open.**
 >To fix this, reset your Editor layout by clicking Layout in the top right of the Editor and clicking Reset Factory Settings, then attempt to open the window again.
 
-**"Your Animation cannot be used for this because it modifies properties unusable in its layer!"**
+**"Your Animation cannot be used for this because it modifies an invalid property type!"**
 >This will occur if you're trying to use a Animation that modifies Non-Transforms for an Animation within a layer that doesn't allow it (or vice versa). You can find out which Animations are 'Transforms Only' [here](#av3-override-controller). If your Animation modifies both Transforms and Non-Transforms, you'll need to split the Animation in two.
 
 **"An exception occured!"**
