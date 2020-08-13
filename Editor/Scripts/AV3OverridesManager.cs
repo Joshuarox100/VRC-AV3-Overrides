@@ -392,7 +392,7 @@ public class AV3OverridesManager : UnityEngine.Object
             foreach (BlendTree tree in trees)
             {
                 string treeName = tree.name.Substring(tree.name.LastIndexOf("vrc"));
-                Debug.Log(treeName);
+                //Debug.Log(treeName);
                 foreach (AnimatorControllerLayer layer in baseAnimator.layers)
                 {
                     if (!ReplaceMotion(baseAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees"})[0]), typeof(BlendTree)), tree))
