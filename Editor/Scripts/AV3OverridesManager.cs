@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.Animations;
-using UnityEditor.Experimental.TerrainAPI;
 using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Networking;
