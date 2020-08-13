@@ -152,7 +152,7 @@ Troubleshooting
 >This will occur if you're trying to use a Animation that modifies Non-Transforms for an Animation within a layer that doesn't allow it (or vice versa). You can find out which Animations are 'Transforms Only' [here](#av3-override-controller). If your Animation modifies both Transforms and Non-Transforms, you'll need to split the Animation in two.
 
 **"An exception occured!"**
->If this happens, ensure you have a clean install of AV3 Overrides, and if the problem persists, [let me know](#contacting-me)!
+>If this happens, ensure you have a clean install of AV3 Overrides and that your project isn't already broken to begin with, and if the problem persists, [let me know](#contacting-me)!
 
 Contacting Me
 --------------
