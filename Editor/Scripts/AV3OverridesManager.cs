@@ -303,6 +303,84 @@ public class AV3OverridesManager : UnityEngine.Object
             //Replace Animations
 
             EditorUtility.DisplayProgressBar("AV3 Overrides", "Applying Override", 0.7f);
+            foreach (BlendTree tree in trees)
+            {
+                string treeName = tree.name.Substring(tree.name.LastIndexOf("vrc"));
+                //Debug.Log(treeName);
+                foreach (AnimatorControllerLayer layer in baseAnimator.layers)
+                {
+                    if (!ReplaceMotion(baseAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in Base.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+                foreach (AnimatorControllerLayer layer in additiveAnimator.layers)
+                {
+                    if (!ReplaceMotion(additiveAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in Additive.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+                foreach (AnimatorControllerLayer layer in gestureAnimator.layers)
+                {
+                    if (!ReplaceMotion(gestureAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in Gesture.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+                foreach (AnimatorControllerLayer layer in actionAnimator.layers)
+                {
+                    if (!ReplaceMotion(actionAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in Action.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+                foreach (AnimatorControllerLayer layer in fxAnimator.layers)
+                {
+                    if (!ReplaceMotion(fxAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in FX.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+                foreach (AnimatorControllerLayer layer in sittingAnimator.layers)
+                {
+                    if (!ReplaceMotion(sittingAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in Sitting.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+                foreach (AnimatorControllerLayer layer in tposeAnimator.layers)
+                {
+                    if (!ReplaceMotion(tposeAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in TPose.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+                foreach (AnimatorControllerLayer layer in ikposeAnimator.layers)
+                {
+                    if (!ReplaceMotion(ikposeAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
+                    {
+                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in IKPose.", "Close");
+                        RevertChanges();
+                        return;
+                    }
+                }
+            }
+
             foreach (KeyValuePair<AnimationClip, AnimationClip> pair in clips)
             {
                 string animName = "proxy_" + pair.Key.name.ToLower();
@@ -381,90 +459,8 @@ public class AV3OverridesManager : UnityEngine.Object
                             return;
                         }
                     }
-                    foreach (BlendTree tree in trees)
-                    {
-                        ReplaceAnimation(tree, (AnimationClip)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(animName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "ProxyAnim", "Assets" + Path.DirectorySeparatorChar + "AV3 Overrides" + Path.DirectorySeparatorChar + "Templates" + Path.DirectorySeparatorChar + "Animations" + Path.DirectorySeparatorChar + "ProxyAnim" })[0]), typeof(AnimationClip)), pair.Value);
-                    }
                 }
-            }
-
-            foreach (BlendTree tree in trees)
-            {
-                string treeName = tree.name.Substring(tree.name.LastIndexOf("vrc"));
-                //Debug.Log(treeName);
-                foreach (AnimatorControllerLayer layer in baseAnimator.layers)
-                {
-                    if (!ReplaceMotion(baseAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees"})[0]), typeof(BlendTree)), tree))
-                    {
-                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in Base.", "Close");
-                        RevertChanges();
-                        return;
-                    }
-                }
-                foreach (AnimatorControllerLayer layer in additiveAnimator.layers)
-                {
-                    if (!ReplaceMotion(additiveAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
-                    {
-                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in Additive.", "Close");
-                        RevertChanges();
-                        return;
-                    }
-                }
-                foreach (AnimatorControllerLayer layer in gestureAnimator.layers)
-                {
-                    if (!ReplaceMotion(gestureAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
-                    {
-                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in Gesture.", "Close");
-                        RevertChanges();
-                        return;
-                    }
-                }
-                foreach (AnimatorControllerLayer layer in actionAnimator.layers)
-                {
-                    if (!ReplaceMotion(actionAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
-                    {
-                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in Action.", "Close");
-                        RevertChanges();
-                        return;
-                    }
-                }
-                foreach (AnimatorControllerLayer layer in fxAnimator.layers)
-                {
-                    if (!ReplaceMotion(fxAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
-                    {
-                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in FX.", "Close");
-                        RevertChanges();
-                        return;
-                    }
-                }
-                foreach (AnimatorControllerLayer layer in sittingAnimator.layers)
-                {
-                    if (!ReplaceMotion(sittingAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
-                    {
-                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in Sitting.", "Close");
-                        RevertChanges();
-                        return;
-                    }
-                }
-                foreach (AnimatorControllerLayer layer in tposeAnimator.layers)
-                {
-                    if (!ReplaceMotion(tposeAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
-                    {
-                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in TPose.", "Close");
-                        RevertChanges();
-                        return;
-                    }
-                }
-                foreach (AnimatorControllerLayer layer in ikposeAnimator.layers)
-                {
-                    if (!ReplaceMotion(ikposeAnimator, layer.name, (BlendTree)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(treeName, new string[] { "Assets" + Path.DirectorySeparatorChar + "VRCSDK" + Path.DirectorySeparatorChar + "Examples3" + Path.DirectorySeparatorChar + "Animation" + Path.DirectorySeparatorChar + "BlendTrees" })[0]), typeof(BlendTree)), tree))
-                    {
-                        EditorUtility.DisplayDialog("AV3 Overrides", "ERROR: Failed to replace " + treeName + " in IKPose.", "Close");
-                        RevertChanges();
-                        return;
-                    }
-                }
-            }
+            }            
 
             EditorUtility.DisplayProgressBar("AV3 Overrides", "Saving Assets", 0.8f);
 
@@ -734,6 +730,10 @@ public class AV3OverridesManager : UnityEngine.Object
             {
                 selectedLayer.stateMachine.states[i].state.motion = newMotion;
             }
+            else if (selectedLayer.stateMachine.states[i].state.motion != null && selectedLayer.stateMachine.states[i].state.motion.GetType() == typeof(BlendTree))
+            {
+                ReplaceMotion((BlendTree)selectedLayer.stateMachine.states[i].state.motion, oldMotion, newMotion);
+            }
         }
 
         for (int i = 0; i < layers.Length; i++)
@@ -750,8 +750,9 @@ public class AV3OverridesManager : UnityEngine.Object
         return true;
     }
 
-    private void ReplaceAnimation(BlendTree source, AnimationClip oldAnim, AnimationClip newAnim)
+    private void ReplaceMotion(BlendTree source, Motion oldAnim, Motion newAnim)
     {
+        Debug.Log(source.name + ", " + oldAnim.name + ", " + newAnim.name);
         ChildMotion[] motions = source.children;
 
         for (int i = 0; i < motions.Length; i++)
