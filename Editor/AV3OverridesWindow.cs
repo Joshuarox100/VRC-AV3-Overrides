@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using VRC.SDK3.Avatars.Components;
@@ -11,13 +12,19 @@ public class AV3OverridesWindow : EditorWindow
     private bool focused;
     private int windowTab;
 
-    [MenuItem("Window/AV3 Overrides/Convert Override")]
+    [MenuItem("Window/AV3 Tools/AV3 Overrides/Convert Overrides")]
     public static void ConvertOverride()
     {
         AV3OverridesWindow window = (AV3OverridesWindow)GetWindow(typeof(AV3OverridesWindow), false, "AV3 Overrides");
-        window.minSize = new Vector2(375f, 290f);
+        window.minSize = new Vector2(375f, 294f);
         window.wantsMouseMove = true;
         window.Show();
+    }
+
+    [MenuItem("Window/AV3 Tools/AV3 Overrides/Check For Updates")]
+    public static void CheckForUpdates()
+    {
+        AV3OverridesManager.CheckForUpdates();
     }
 
     private void OnFocus()
@@ -58,7 +65,7 @@ public class AV3OverridesWindow : EditorWindow
                 break;
             case 1:
                 GUILayout.BeginVertical();
-                //DrawAboutWindow();
+                DrawAboutWindow();
                 GUILayout.EndVertical();
                 GUILayout.EndArea();
                 GUILayout.FlexibleSpace();
@@ -67,6 +74,58 @@ public class AV3OverridesWindow : EditorWindow
                 break;
         }
     }
+
+    private void DrawAboutWindow()
+    {
+        string version = (AssetDatabase.FindAssets("VERSION", new string[] { manager.relativePath }).Length > 0) ? " " + File.ReadAllText(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("VERSION", new string[] { manager.relativePath })[0])) : "";
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        GUILayout.Box("<b><size=18>AV3 Overrides" + version + "</size></b>", new GUIStyle(GUI.skin.GetStyle("Box")) { richText = true }, GUILayout.Width(300f));
+        GUILayout.FlexibleSpace();
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        GUILayout.Box("<size=13>Author: Joshuarox100</size>", new GUIStyle(GUI.skin.GetStyle("Box")) { richText = true, normal = new GUIStyleState() { background = null } });
+        GUILayout.FlexibleSpace();
+        GUILayout.EndHorizontal();
+        EditorGUILayout.Space();
+        DrawLine();
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        GUILayout.Box("<b><size=15>Summary</size></b>", new GUIStyle(GUI.skin.GetStyle("Box")) { richText = true }, GUILayout.Width(200f));
+        GUILayout.FlexibleSpace();
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        GUILayout.Box("Make upgrading to 3.0 a breeze with AV3 Overrides!", new GUIStyle(GUI.skin.GetStyle("Box")) { richText = true, normal = new GUIStyleState() { background = null } }, GUILayout.Width(350f));
+        GUILayout.FlexibleSpace();
+        GUILayout.EndHorizontal();
+        EditorGUILayout.Space();
+        DrawLine();
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        GUILayout.Box("<b><size=15>Troubleshooting</size></b>", new GUIStyle(GUI.skin.GetStyle("Box")) { richText = true }, GUILayout.Width(200f));
+        GUILayout.FlexibleSpace();
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        GUILayout.Box("If you're having issues or want to contact me, you can find more information at the Github page linked below!", new GUIStyle(GUI.skin.GetStyle("Box")) { richText = true, normal = new GUIStyleState() { background = null } }, GUILayout.Width(350f));
+        GUILayout.FlexibleSpace();
+        GUILayout.EndHorizontal();
+        EditorGUILayout.Space();
+        DrawLine(false);
+        GUILayout.Label("Github Repository", new GUIStyle(EditorStyles.boldLabel) { alignment = TextAnchor.UpperCenter });
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        if (GUILayout.Button("Open in Browser", GUILayout.Width(250)))
+        {
+            Application.OpenURL("https://github.com/Joshuarox100/VRC-AV3-Overrides");
+        }
+        GUILayout.FlexibleSpace();
+        GUILayout.EndHorizontal();
+        GUILayout.FlexibleSpace();
+    }
+
     private void DrawSetupWindow()
     {
         EditorGUILayout.BeginVertical();
@@ -87,7 +146,7 @@ public class AV3OverridesWindow : EditorWindow
         manager.overrides = (AnimatorOverrideController)EditorGUILayout.ObjectField(new GUIContent("Custom Override", "The AV3 Override Controller to be converted."), manager.overrides, typeof(AnimatorOverrideController), false);
         GUILayout.FlexibleSpace();
         GUILayout.BeginHorizontal();
-        GUILayout.Label(new GUIContent("Replace Animators", "Replace Animators already present in the Descriptor."), GUILayout.Width(145));
+        GUILayout.Label(new GUIContent("Replace Animators", "Replace Animators already present in the Avatar Descriptor."), GUILayout.Width(145));
         manager.replaceAnimators = Convert.ToBoolean(GUILayout.Toolbar(Convert.ToInt32(manager.replaceAnimators), new string[] { "No", "Yes" }));
         GUILayout.EndHorizontal();
         GUILayout.FlexibleSpace();
@@ -124,6 +183,7 @@ public class AV3OverridesWindow : EditorWindow
         if (GUILayout.Button("Generate"))
         {
             manager.GenerateAnimators();
+            EditorUtility.ClearProgressBar();
         }
         EditorGUILayout.EndVertical();
 
