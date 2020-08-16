@@ -947,6 +947,9 @@ public class AV3OverridesManager : UnityEngine.Object
         if (AssetDatabase.IsValidFolder(outputPath + Path.DirectorySeparatorChar + "Animators") && AssetDatabase.FindAssets("", new string[] { outputPath + Path.DirectorySeparatorChar + "Animators" }).Length == 0)
             if (!AssetDatabase.DeleteAsset(outputPath + Path.DirectorySeparatorChar + "Animators"))
                 Debug.LogError("[AV3 Overrides] Failed to revert all changes.");
+        if (AssetDatabase.IsValidFolder(outputPath + Path.DirectorySeparatorChar + "BlendTrees") && AssetDatabase.FindAssets("", new string[] { outputPath + Path.DirectorySeparatorChar + "BlendTrees" }).Length == 0)
+            if (!AssetDatabase.DeleteAsset(outputPath + Path.DirectorySeparatorChar + "BlendTrees"))
+                Debug.LogError("[AV3 Overrides] Failed to revert all changes.");
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }

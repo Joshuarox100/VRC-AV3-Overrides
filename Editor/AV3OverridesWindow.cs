@@ -232,16 +232,7 @@ public class AV3OverridesWindow : EditorWindow
         manager.avatar = desc;
     }
 
-    private void DrawLine()
-    {
-        var rect = EditorGUILayout.BeginHorizontal();
-        Handles.color = Color.gray;
-        Handles.DrawLine(new Vector2(rect.x - 15, rect.y), new Vector2(rect.width + 15, rect.y));
-        EditorGUILayout.EndHorizontal();
-        EditorGUILayout.Space();
-    }
-
-    private void DrawLine(bool addSpace)
+    private void DrawLine(bool addSpace = true)
     {
         var rect = EditorGUILayout.BeginHorizontal();
         Handles.color = Color.gray;
