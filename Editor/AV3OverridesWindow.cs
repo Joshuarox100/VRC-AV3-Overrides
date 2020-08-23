@@ -12,7 +12,7 @@ public class AV3OverridesWindow : EditorWindow
     private bool focused;
     private int windowTab;
 
-    [MenuItem("Window/AV3 Tools/AV3 Overrides/Convert Overrides")]
+    [MenuItem("Tools/Avatars 3.0//AV3 Overrides/Convert Overrides")]
     public static void ConvertOverride()
     {
         AV3OverridesWindow window = (AV3OverridesWindow)GetWindow(typeof(AV3OverridesWindow), false, "AV3 Overrides");
@@ -21,7 +21,7 @@ public class AV3OverridesWindow : EditorWindow
         window.Show();
     }
 
-    [MenuItem("Window/AV3 Tools/AV3 Overrides/Check For Updates")]
+    [MenuItem("Tools/Avatars 3.0//AV3 Overrides/Check For Updates")]
     public static void CheckForUpdates()
     {
         AV3OverridesManager.CheckForUpdates();
@@ -215,7 +215,7 @@ public class AV3OverridesWindow : EditorWindow
 
             //Select
             var currentIndex = Array.IndexOf(descriptors, manager.avatar);
-            var nextIndex = EditorGUILayout.Popup(new GUIContent("Active Avatar", "The Avatar you want to setup scaling for."), currentIndex, names);
+            var nextIndex = EditorGUILayout.Popup(new GUIContent("Active Avatar", "The Avatar you want to use an override on."), currentIndex, names);
             if (nextIndex < 0)
                 nextIndex = 0;
             if (nextIndex != currentIndex)
