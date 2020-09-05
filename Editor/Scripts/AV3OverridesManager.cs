@@ -752,7 +752,7 @@ public class AV3OverridesManager : UnityEngine.Object
 
     private void ReplaceMotion(BlendTree source, Motion oldAnim, Motion newAnim)
     {
-        Debug.Log(source.name + ", " + oldAnim.name + ", " + newAnim.name);
+        //Debug.Log(source.name + ", " + oldAnim.name + ", " + newAnim.name);
         ChildMotion[] motions = source.children;
 
         for (int i = 0; i < motions.Length; i++)
@@ -947,6 +947,9 @@ public class AV3OverridesManager : UnityEngine.Object
         if (AssetDatabase.IsValidFolder(outputPath + Path.DirectorySeparatorChar + "Animators") && AssetDatabase.FindAssets("", new string[] { outputPath + Path.DirectorySeparatorChar + "Animators" }).Length == 0)
             if (!AssetDatabase.DeleteAsset(outputPath + Path.DirectorySeparatorChar + "Animators"))
                 Debug.LogError("[AV3 Overrides] Failed to revert all changes.");
+        if (AssetDatabase.IsValidFolder(outputPath + Path.DirectorySeparatorChar + "BlendTrees") && AssetDatabase.FindAssets("", new string[] { outputPath + Path.DirectorySeparatorChar + "BlendTrees" }).Length == 0)
+            if (!AssetDatabase.DeleteAsset(outputPath + Path.DirectorySeparatorChar + "BlendTrees"))
+                Debug.LogError("[AV3 Overrides] Failed to revert all changes.");
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
@@ -954,9 +957,26 @@ public class AV3OverridesManager : UnityEngine.Object
     private void UpdatePaths()
     {
         string old = relativePath;
-        relativePath = AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("(AV3Overrides)")[0]).Substring(0, AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("(AV3Overrides)")[0]).LastIndexOf("Templates") - 1);
+
+        // Get the relative path.
+        string[] guids = AssetDatabase.FindAssets(GetType().ToString());
+        foreach (string guid in guids)
+        {
+            string tempPath = AssetDatabase.GUIDToAssetPath(guid);
+            if (tempPath.LastIndexOf(typeof(AV3OverridesManager).ToString()) == tempPath.Length - typeof(AV3OverridesManager).ToString().Length - 3)
+            {
+                relativePath = tempPath.Substring(0, tempPath.LastIndexOf("Editor") - 1);
+                break;
+            }
+        }
+
         if (relativePath == old)
+        {
+            // The path was blank.
+            if (outputPath == "")
+                outputPath = "Assets";
             return;
+        }
         else if (outputPath == null || !AssetDatabase.IsValidFolder(outputPath))
         {
             outputPath = relativePath + Path.DirectorySeparatorChar + "Output";
@@ -979,7 +999,23 @@ public class AV3OverridesManager : UnityEngine.Object
 
     public static void CheckForUpdates()
     {
-        string relativePath = AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("(AV3Overrides)")[0]).Substring(0, AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("(AV3Overrides)")[0]).LastIndexOf("Templates") - 1);
+        string[] guids = AssetDatabase.FindAssets(typeof(AV3OverridesManager).ToString());
+        string relativePath = "";
+        foreach (string guid in guids)
+        {
+            string tempPath = AssetDatabase.GUIDToAssetPath(guid);
+            if (tempPath.LastIndexOf(typeof(AV3OverridesManager).ToString()) == tempPath.Length - typeof(AV3OverridesManager).ToString().Length - 3)
+            {
+                relativePath = tempPath.Substring(0, tempPath.LastIndexOf("Editor") - 1);
+                break;
+            }
+        }
+        if (relativePath == "")
+        {
+            EditorUtility.DisplayDialog("AV3 Overrides", "Failed to identify installed version.\n(VERSION file was not found.)", "Close");
+            return;
+        }        
+
         string installedVersion = (AssetDatabase.FindAssets("VERSION", new string[] { relativePath }).Length > 0) ? File.ReadAllText(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("VERSION", new string[] { relativePath })[0])) : "";
 
         GameObject netMan = new GameObject { hideFlags = HideFlags.HideInHierarchy };
