@@ -12,7 +12,7 @@ public class AV3OverridesWindow : EditorWindow
     private bool focused;
     private int windowTab;
 
-    [MenuItem("Tools/Avatars 3.0//AV3 Overrides/Convert Overrides")]
+    [MenuItem("Tools/Joshuarox100/AV3 Overrides/Convert Overrides")]
     public static void ConvertOverride()
     {
         AV3OverridesWindow window = (AV3OverridesWindow)GetWindow(typeof(AV3OverridesWindow), false, "AV3 Overrides");
@@ -21,7 +21,7 @@ public class AV3OverridesWindow : EditorWindow
         window.Show();
     }
 
-    [MenuItem("Tools/Avatars 3.0//AV3 Overrides/Check For Updates")]
+    [MenuItem("Tools/Joshuarox100/AV3 Overrides/Check For Updates")]
     public static void CheckForUpdates()
     {
         AV3OverridesManager.CheckForUpdates();
